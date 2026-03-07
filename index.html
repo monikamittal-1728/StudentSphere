@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <title>StudentSphere | Student Registration Portal</title>
+    <meta
+      name="description"
+      content="StudentSphere - Modern student registration portal for easy and secure enrollment."
+    />
+    <meta
+      name="keywords"
+      content="Student Registration, Enrollment Portal, StudentSphere, Online Admission"
+    />
+    <meta name="author" content="StudentSphere Team" />
+  </head>
+  <body>
+    <!-- BACKGROUND BLOBS: decorative animated gradient circles -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- HEADER -->
+    <header>
+      <nav>
+        <div class="logo-section">
+          <img id="logo" src="logo.png" alt="StudentSphere logo" />
+          <div class="logo-inner-section">
+            <span id="logo-name">StudentSphere</span>
+            <span id="logo-tagline">Register · Manage · Track student records seamlessly</span>
+          </div>
+        </div>
+
+        <ul class="nav-menu">
+          <li>
+            <!-- Active state on Register since this is index.html; nav-hide-mobile hides it on mobile -->
+            <a href="index.html" class="active nav-hide-mobile">
+              <i class="fa-regular fa-pen-to-square icons-menu"></i> Register
+            </a>
+          </li>
+          <li>
+            <a href="record.html">
+              <i class="fa-regular fa-clipboard icons-menu"></i> View Records
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero / page heading -->
+      <section class="academic-section">
+        <span id="academic-year">ACADEMIC YEAR 2026-27</span>
+        <h1 id="academic-title">Register a <br /><em>New Student</em></h1>
+        <span id="academic-detail">
+          Fill in the form below to add a student to the system.<br />
+          All fields are required.
+        </span>
+      </section>
+
+      <!-- Registration Form -->
+      <section class="reg-section">
+        <div id="reg-container">
+          <!-- Decorative progress dots -->
+          <div class="design-container">
+            <span class="design-dot dot1"></span>
+            <span class="design-line line1"></span>
+            <span class="design-dot dot2"></span>
+            <span class="design-line line2"></span>
+            <span class="design-dot dot3"></span>
+            <span class="design-line line3"></span>
+            <span class="design-dot dot4"></span>
+          </div>
+
+          <div class="form-container">
+            <!-- novalidate disables all native browser validation — JS handles everything -->
+            <form class="input-form" novalidate>
+              <div class="outter-container">
+                <!-- Student Name: validated in JS (letters + spaces only) -->
+                <div class="input-container">
+                  <label for="studentName" class="input-label">
+                    <i class="fa-regular fa-user"></i> STUDENT NAME
+                  </label>
+                  <input
+                    type="text"
+                    id="studentName"
+                    class="input-field"
+                    placeholder="Full Name"
+                  />
+                </div>
+
+                <!-- Student ID: validated in JS (numeric only) -->
+                <div class="input-container">
+                  <label for="studentId" class="input-label">
+                    <i class="fa-regular fa-folder-closed"></i> STUDENT ID
+                  </label>
+                  <input
+                    type="text"
+                    id="studentId"
+                    class="input-field"
+                    placeholder="Numeric ID only"
+                  />
+                </div>
+              </div>
+
+              <div class="outter-container">
+                <!-- Contact: validated in JS (numeric, min 10 digits) -->
+                <div class="input-container">
+                  <label for="contact" class="input-label">
+                    <i class="fa-solid fa-phone"></i> CONTACT NUMBER
+                  </label>
+                  <input
+                    type="text"
+                    id="contact"
+                    class="input-field"
+                    placeholder="Min. 10 digits"
+                  />
+                </div>
+
+                <!-- Email: validated in JS (valid email format) -->
+                <div class="input-container">
+                  <label for="email" class="input-label">
+                    <i class="fa-regular fa-envelope"></i> EMAIL ADDRESS
+                  </label>
+                  <input
+                    type="text"
+                    id="email"
+                    class="input-field"
+                    placeholder="student@email.com"
+                  />
+                </div>
+              </div>
+
+              <div class="button-container">
+                <button type="submit" class="btnSubmit">
+                  <i class="fa-solid fa-plus"></i> Add Student
+                </button>
+                <button type="reset" class="btnClear">
+                  <i class="fa-solid fa-arrow-rotate-left"></i> Clear
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- TOAST notification -->
+    <div class="toast" id="toast"></div>
+
+
+    <script src="script.js"></script>
+  </body>
+</html>

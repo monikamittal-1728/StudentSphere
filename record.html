@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <title>StudentSphere | View Records</title>
+    <meta
+      name="description"
+      content="StudentSphere - View, edit, and delete registered student records."
+    />
+    <meta
+      name="keywords"
+      content="Student Records, Student Database, StudentSphere, Enrollment"
+    />
+    <meta name="author" content="StudentSphere Team" />
+  </head>
+  <body>
+    <!-- BACKGROUND BLOBS: decorative animated gradient circles -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- HEADER -->
+    <header>
+      <nav>
+        <div class="logo-section">
+          <img id="logo" src="logo.png" alt="StudentSphere logo" />
+          <div class="logo-inner-section">
+            <span id="logo-name">StudentSphere</span>
+            <span id="logo-tagline">Register · Manage · Track student records seamlessly</span>
+          </div>
+        </div>
+
+        <ul class="nav-menu">
+          <li>
+            <a href="index.html">
+              <i class="fa-regular fa-pen-to-square icons-menu"></i> Register
+            </a>
+          </li>
+          <li>
+            <!-- Active state on View Records since this is record.html; nav-hide-mobile hides it on mobile -->
+            <a href="record.html" class="active nav-hide-mobile">
+              <i class="fa-regular fa-clipboard icons-menu"></i> View Records
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero / page heading -->
+      <section class="academic-section">
+        <span id="academic-year">STUDENT DATABASE</span>
+        <h1 id="academic-title">All Student <br /><em>Records</em></h1>
+        <span id="academic-detail">Browse, edit or delete registered student entries.</span>
+      </section>
+
+      <!-- Records Table Section -->
+      <section class="record-section">
+        <div class="records-card">
+          <!--
+            .table-wrapper gets overflow-y: auto and a max-height
+            injected by JS (addDynamicScrollbar) so the scrollbar
+            appears only when there are enough rows to overflow.
+          -->
+          <div class="table-wrapper" id="tableWrapper">
+            <table class="records-table" id="recordsTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Student Name</th>
+                  <th>Student ID</th>
+                  <th>Email Address</th>
+                  <th>Contact No.</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+
+            <!-- Empty state shown when no records exist -->
+            <div class="empty-state" id="emptyState">
+              <div class="empty-icon">
+                <i class="fa-regular fa-folder-open"></i>
+              </div>
+              <p class="empty-title">No records found</p>
+              <p class="empty-sub">
+                Register students from the
+                <a href="index.html">Register</a> page.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- EDIT MODAL -->
+    <div class="modal-overlay hidden" id="editModal">
+      <div
+        class="modal-box edit-modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="editModalTitle"
+      >
+        <div class="modal-header">
+          <h3 class="modal-title" id="editModalTitle">
+            <i class="fa-regular fa-pen-to-square"></i> Edit Student
+          </h3>
+          <button
+            class="modal-close"
+            onclick="closeEditModal()"
+            aria-label="Close"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- novalidate on the modal fields — JS handles all validation -->
+        <div class="outter-container">
+          <!-- Name: validated in JS (letters + spaces only) -->
+          <div class="input-container">
+            <label for="editName" class="input-label">STUDENT NAME</label>
+            <input
+              type="text"
+              id="editName"
+              class="input-field"
+              placeholder="Full Name"
+            />
+          </div>
+          <!-- Student ID: validated in JS (numeric only) -->
+          <div class="input-container">
+            <label for="editStudentId" class="input-label">STUDENT ID</label>
+            <input
+              type="text"
+              id="editStudentId"
+              class="input-field"
+              placeholder="Numeric ID only"
+            />
+          </div>
+        </div>
+
+        <div class="outter-container">
+          <!-- Contact: validated in JS (numeric, min 10 digits) -->
+          <div class="input-container">
+            <label for="editContact" class="input-label">CONTACT NUMBER</label>
+            <input
+              type="text"
+              id="editContact"
+              class="input-field"
+              placeholder="Min. 10 digits"
+            />
+          </div>
+          <!-- Email: validated in JS (valid email format) -->
+          <div class="input-container">
+            <label for="editEmail" class="input-label">EMAIL ADDRESS</label>
+            <input
+              type="text"
+              id="editEmail"
+              class="input-field"
+              placeholder="student@email.com"
+            />
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-ghost" onclick="closeEditModal()">Cancel</button>
+          <button class="btnSubmit" onclick="saveEdit()">
+            <i class="fa-solid fa-floppy-disk"></i> Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div class="modal-overlay hidden" id="deleteModal">
+      <div
+        class="modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="deleteModalTitle"
+      >
+        <div class="modal-icon"><i class="fa-regular fa-trash-can"></i></div>
+        <h3 class="modal-title" id="deleteModalTitle">Delete Student?</h3>
+        <p class="modal-desc">This action is permanent and cannot be undone.</p>
+        <div class="modal-actions">
+          <button class="btn-ghost" onclick="closeDeleteModal()">Cancel</button>
+          <button class="btn-danger" onclick="confirmDelete()">
+            <i class="fa-solid fa-trash"></i> Yes, Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST notification -->
+    <div class="toast" id="toast"></div>
+
+
+    <script src="script.js"></script>
+  </body>
+</html>
